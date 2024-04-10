@@ -1,0 +1,222 @@
+[
+    {
+        "type": "function",
+        "function": {
+            "name": "get_current_track",
+            "description": "Get the current track playing for this user on Spotify"
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "basic_prompt",
+            "description": "Default. Get a chat completion for a prompt.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "prompt": {
+                        "type": "string",
+                        "description": "The prompt to generate a response to. Probably just what the user said."
+                    }
+                },
+                "required": ["prompt"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "find_track",
+            "description": "Search for a track on Spotify. Includes data about the track, album, and artist, and a uri for the track.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The search query for Spotify."
+                    }
+                },
+                "required": ["query"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "find_album",
+            "description": "Search for an album on Spotify. Includes data about the album and artist, and a uri for the album.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The search query for Spotify."
+                    }
+                },
+                "required": ["query"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "find_artist",
+            "description": "Search for an artist on Spotify. Includes data about the artist and a uri for the artist.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The search query for Spotify."
+                    }
+                },
+                "required": ["query"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "queue_track",
+            "description": "Place a track in the user's Spotify playback queue. Make sure to get a track uri from the find_track function.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "track": {
+                        "type": "string",
+                        "description": "The Spotify track uri to queue. MUST be a track uri, not an album or artist uri."
+                    }
+                },
+                "required": ["track"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "play_track",
+            "description": "Instantly play a track on Spotify for the user. Make sure to get a track uri from the find_track function.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "track": {
+                        "type": "string",
+                        "description": "The Spotify track uri to play. MUST be a track uri, not an album or artist uri."
+                    }
+                },
+                "required": ["track"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "research",
+            "description": "Search Wikipedia for information on a track, album, or artist. Use this if you need some context on a song, artist, or album, or if the user asks for information on one of these things.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "'artist', 'track', or 'album'"
+                    },
+                    "object":
+                    {
+                        "type": "string",
+                        "description": "Refer to the object you're looking for. For example, 'The Beatles', 'Hey Jude', or 'Abbey Road'."
+                    },
+                    "query":
+                    {
+                        "type": "string",
+                        "description": "Specific information to look for in the text. For example, a band's lead singer, founding date, or a track's reception. Use this to narrow down the info you give the user."
+                    }
+                },
+                "required": ["type", "object", "query"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_similar",
+            "description": "Get qualitatively simliar tracks to a given track. Limited to tracks in the user's library.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The track id to get similar tracks for."
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "The number of similar tracks to return."
+                    }
+                },
+                "required": ["id"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "secondary_research",
+            "description": "Do research about a subject matter not directly related to music. Use this if you need to look up information on a topic that isn't a song, artist, or album, for example, if a user asks about a record label, history of a band's hometown, or otherwise.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "subject": {
+                        "type": "string",
+                        "description": "The subject matter to research."
+                    },
+                    "query": {
+                        "type": "string",
+                        "description": "Specific information to look for in the text. For example, a band's lead singer, founding date, or a track's reception. Use this to narrow down the info you give the user."
+                    }
+                },
+                "required": ["subject"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "scour_page",
+            "description": "Scrape the links from a wikipedia page, returning the ones relating to 'query' and of type 'type'. Combine this with finding track/album/artist to find interesting musical connections for the user.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "page_name": {
+                        "type": "string",
+                        "description": "The title of the starting wikipedia page. For example, 'The Beatles'."
+                    },
+                    "query": {
+                        "type": "string",
+                        "description": "The seed term to find relevant links."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The type of link to find. For example, 'album', 'artist', or 'track'."
+                    }
+                },
+                "required": ["page_name", "query", "type"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "describe_track_features",
+            "description": "Describes a track based on features in its Spotify data. Use to describe the qualities of songs.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "track":{
+                        "type": "string",
+                        "description": "The Spotify uri of the track to describe."
+                    }
+                },
+                "required": ["track"]
+            }
+        }
+    }
+]
